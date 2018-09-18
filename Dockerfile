@@ -18,15 +18,15 @@ RUN set -ex; \
         python3.6
 
 RUN set -ex; \
-    pip --no-cache-dir install \
+    pip3 --no-cache-dir install \
         pipenv
 
 WORKDIR /usr/src/app
 
 # install dependencies
 COPY Pipfile Pipfile.lock ./
-# RUN set -x; \
-#     pipenv install --system --verbose
+RUN set -x; \
+    pipenv install --system --verbose
 
 COPY . ./
 
