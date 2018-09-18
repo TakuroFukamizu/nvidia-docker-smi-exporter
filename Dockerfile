@@ -8,7 +8,8 @@ RUN set -ex; \
         apt-file \
     ; \
     apt-file update; \
-    apt-get install software-properties-common
+    apt-get install -y --no-install-recommends \
+        software-properties-common
 
 RUN set -ex; \
     add-apt-repository ppa:jonathonf/python-3.6; \
