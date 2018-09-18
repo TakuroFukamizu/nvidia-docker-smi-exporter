@@ -30,6 +30,7 @@ RUN set -ex; \
         pipenv
 
 WORKDIR /usr/src/app
+USER root
 
 # install dependencies
 COPY Pipfile Pipfile.lock ./
