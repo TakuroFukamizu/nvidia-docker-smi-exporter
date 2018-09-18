@@ -18,12 +18,13 @@ def parse_res(res):
         record = GpuRecord(*row)
         yield record
 
-if __name__=='__main__':
-    data = ''
+def get_smi_record():
     text_list = res_cmd(cmd)
-    for record in parse_res([ text.decode('utf-8') for text in text_list ]): 
+    for record in parse_res([text.decode('utf-8') for text in text_list]):
+        yield record
+
+
+if __name__=='__main__':
+    for record in get_smi_record():
         print(record)
-    #for text in records:
-    #    text = text.decode('utf-8')
-    #    data += text + "\n"
 
