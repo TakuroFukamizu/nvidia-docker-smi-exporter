@@ -15,7 +15,11 @@ RUN set -ex; \
     add-apt-repository ppa:jonathonf/python-3.6; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
-        python3.6
+        python3.6 \
+        python3-pip \
+    ; \
+    python3 -V; \
+    pip3 -V
 
 RUN set -ex; \
     pip3 --no-cache-dir install \
@@ -30,5 +34,5 @@ RUN set -x; \
 
 COPY . ./
 
-CMD ["python", "src/app.py"]
+CMD ["python3", "src/app.py"]
 
