@@ -2,6 +2,10 @@ FROM nvidia/cuda:9.0-base-ubuntu16.04
 
 ENV PYTHONUNBUFFERED=1
 
+# require by pipenv
+ENV LC_ALL=C.UTF-8
+ENV LANG=C.UTF-8
+
 RUN set -ex; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
