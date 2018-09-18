@@ -1,14 +1,20 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import traceback
+import argparse
+import json
 from envparse import env
 from bottle import route, run, request, response, hook, HTTPResponse
 from libs.watcher import get_smi_record
+from libs.encoder import MyEncoder
 
 # -----------
 
 env.read_envfile()
 PORT = env.int("PORT", default=8080)
+
+hasInternalError = False
 
 # -----------
 
@@ -41,8 +47,8 @@ def api_status():
 
     records = []
     try:
-    for record in get_smi_record():
-        records.append(record)
+        for record in get_smi_record():
+            records.append(record)
     except Exception as ex:
         print(ex)
         print(traceback.format_exc())
@@ -60,22 +66,6 @@ def api_status():
         indent=2,
         cls=MyEncoder
     ) # FIXME: ensure_ascii
-
-
-# -----------
-
-class MyEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, numpy.integer):
-            return int(obj)
-        elif isinstance(obj, numpy.floating):
-            return float(obj)
-        elif isinstance(obj, numpy.ndarray):
-            return obj.tolist()
-        elif isinstance(obj, numpy.float32):
-            return float(obj)
-        else:
-            return super(MyEncoder, self).default(obj)
 
 # -----------
 # bootstrap
