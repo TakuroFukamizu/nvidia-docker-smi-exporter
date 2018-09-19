@@ -1,4 +1,4 @@
-FROM nvidia/cuda:9.0-devel-ubuntu16.04
+FROM python:3.6-stretch
 
 ENV PYTHONUNBUFFERED=1
 
@@ -6,24 +6,23 @@ ENV PYTHONUNBUFFERED=1
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
 
-RUN set -ex; \
-    apt-get update; \
-    apt-get install -y --no-install-recommends \
-        apt-file \
-    ; \
-    apt-file update; \
-    apt-get install -y --no-install-recommends \
-        software-properties-common
+ENV NVIDIA_PUB_KEY "http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/7fa2af80.pub"
+ENV NVIDIA_REPO "deb http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64 /"
 
 RUN set -ex; \
     add-apt-repository ppa:jonathonf/python-3.6; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
-        python3.6 \
-        python3-pip \
-    ; \
-    python3 -V; \
-    pip3 -V
+        build-essential \
+        wget \
+    wget -qO - ${NVIDIA_PUB_KEY} | apt-key add -; \
+    echo ${NVIDIA_REPO} > /etc/apt/sources.list.d/cuda.list; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends nvidia-390-dev; \
+    rm -rf /var/lib/apt/lists/*; \
+    bundle install --deployment --without test; \
+    python -V; \
+    pip -V
 
 RUN set -ex; \
     pip3 --no-cache-dir install \
