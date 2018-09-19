@@ -14,6 +14,7 @@ RUN set -ex; \
     apt-get install -y --no-install-recommends \
         build-essential \
         wget \
+    ; \
     wget -qO - ${NVIDIA_PUB_KEY} | apt-key add -; \
     echo ${NVIDIA_REPO} > /etc/apt/sources.list.d/cuda.list; \
     apt-get update; \
