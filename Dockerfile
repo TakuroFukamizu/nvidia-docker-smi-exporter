@@ -10,7 +10,6 @@ ENV NVIDIA_PUB_KEY "http://developer.download.nvidia.com/compute/cuda/repos/ubun
 ENV NVIDIA_REPO "deb http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64 /"
 
 RUN set -ex; \
-    add-apt-repository ppa:jonathonf/python-3.6; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
         build-essential \
